@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { EventContext } from "../context/EventsContext";
 import EditEventForm from "../components/EditEventForm";
+import DeleteEvent from "../components/DeleteEvent";
 
 export const EventPage = () => {
   const { eventId } = useParams();
   const { events, categories } = useContext(EventContext);
   const event = events.find((e) => e.id === Number(eventId));
   const [editEvent, setEditEvent] = useState(false);
+  const [deleteEvent, setDeleteEvent] = useState(false);
 
   function getCategoryName(categoryId) {
     const category = categories.find((cat) => cat.id === categoryId);
@@ -36,6 +38,22 @@ export const EventPage = () => {
                 categories={categories}
                 cancel={() => setEditEvent(false)}
                 finish={() => setEditEvent(false)}
+              />
+            </Flex>
+            <Flex gap={2}>
+              <Button
+                onClick={() => setDeleteEvent(true)}
+                mt="10px"
+                mr="10px"
+                mb="10px"
+              >
+                Delete event
+              </Button>
+              <DeleteEvent
+                isOpen={deleteEvent}
+                event={event}
+                cancel={() => setDeleteEvent(false)}
+                finish={() => setDeleteEvent(false)}
               />
             </Flex>
           </Flex>

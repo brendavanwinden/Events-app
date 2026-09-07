@@ -1,32 +1,15 @@
 import { Heading, Image, Text, Box, Checkbox, Flex } from "@chakra-ui/react";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { EventContext } from "../context/EventsContext";
 import { SearchBar } from "../components/Search";
 
 export const EventsPage = () => {
-  const [events, setEvents] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const { categories } = useContext(EventContext);
+  const { events, categories } = useContext(EventContext);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const navigate = useNavigate();
-
-  async function getEvents() {
-    const response = await fetch("http://localhost:3000/events", {
-      method: "GET",
-    });
-    return response.json();
-  }
-
-  useEffect(() => {
-    async function fetchEvents() {
-      const result = await getEvents();
-      setEvents(result);
-    }
-
-    fetchEvents();
-  }, []);
 
   function getCategoryName(categoryId) {
     const category = categories.find((cat) => cat.id === categoryId);
