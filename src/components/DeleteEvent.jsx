@@ -1,6 +1,7 @@
 import { Button, HStack, Dialog } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { toaster } from "./ui/toaster";
 
 export default function DeleteEvent({ isOpen, event, cancel, finish }) {
   const {
@@ -11,12 +12,33 @@ export default function DeleteEvent({ isOpen, event, cancel, finish }) {
   const navigate = useNavigate();
 
   const onSubmit = async () => {
-    await fetch(`http://localhost:3000/events/${event.id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    navigate("/");
-    finish();
+    try {
+      const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        toaster.create({
+          title: "Error",
+          description: "Event is not deleted",
+          type: "error",
+        });
+        return;
+      }
+      toaster.create({
+        title: "Successful!",
+        description: "Event was successfully deleted",
+        type: "success",
+      });
+      navigate("/");
+      finish();
+    } catch {
+      toaster.create({
+        title: "Error",
+        description: "An error has occurred",
+        type: "error",
+      });
+    }
   };
 
   return (

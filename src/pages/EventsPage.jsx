@@ -1,4 +1,15 @@
-import { Heading, Image, Text, Box, Checkbox, Flex } from "@chakra-ui/react";
+import {
+  Heading,
+  Image,
+  Text,
+  Box,
+  Checkbox,
+  Flex,
+  Stack,
+  SimpleGrid,
+  HStack,
+  Tag,
+} from "@chakra-ui/react";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { EventContext } from "../context/EventsContext";
@@ -78,44 +89,75 @@ export const EventsPage = () => {
             No events found. Try a different search.
           </Text>
         ) : (
-          <Box display="flex" flexWrap="wrap" justifyContent="center">
+          <SimpleGrid columns={[1, 2, 3]} gap={6} mb="60px">
             {filteredEvents.map((event) => {
               const categoryNames = event.categoryIds
                 .map((id) => getCategoryName(id))
                 .filter(Boolean);
 
               return (
-                <div
+                <Box
                   key={event.id}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  overflow="hidden"
+                  p={4}
+                  mx="auto"
+                  maxW="250px"
+                  bg="gray.800"
+                  borderColor="gray.600"
+                  minW="250px"
+                  boxShadow="0 4px 20px rgba(255, 255, 255, 0.08)"
                   onClick={() => navigate(`/event/${event.id}`)}
                 >
-                  <p>{event.title}</p>
-                  <p>{event.description}</p>
-                  <Image src={event.image} alt={event.title} />
-                  <p>{event.location}</p>
-                  <p>
-                    {new Date(event.startTime).toLocaleString([], {
-                      year: "numeric",
-                      month: "numeric",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                  <p>
-                    {new Date(event.endTime).toLocaleString([], {
-                      year: "numeric",
-                      month: "numeric",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                  <p>{categoryNames.join(", ")}</p>
-                </div>
+                  <Stack>
+                    <Text fontSize="lg" fontWeight="bold">
+                      {event.title}
+                    </Text>
+                    <Text fontSize="sm">{event.description}</Text>
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      borderRadius="md"
+                      mb={3}
+                      objectFit="cover"
+                      height="150px"
+                      width="100%"
+                    />
+                    <Stack minH="120px" spacing={1}>
+                      <Text fontSize="sm" color="gray.400">
+                        {event.location}
+                      </Text>
+                      <Text fontSize="sm" color="gray.400">
+                        {new Date(event.startTime).toLocaleString("nl-NL", {
+                          day: "numeric",
+                          month: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                        {" – "}
+                        {new Date(event.endTime).toLocaleString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </Text>
+                      <HStack spacing={2} wrap="wrap">
+                        {categoryNames.map((name) => (
+                          <Tag.Root
+                            key={name}
+                            colorScheme="grey"
+                            border="1px solid grey"
+                          >
+                            <Tag.Label fontSize="sm">{name}</Tag.Label>
+                          </Tag.Root>
+                        ))}
+                      </HStack>
+                    </Stack>
+                  </Stack>
+                </Box>
               );
             })}
-          </Box>
+          </SimpleGrid>
         )}
       </Flex>
     </>

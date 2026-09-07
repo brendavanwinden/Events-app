@@ -5,6 +5,8 @@ import AddEventForm from "./NewEventForm";
 import { useState } from "react";
 import { useContext } from "react";
 import { EventContext } from "../context/EventsContext";
+import { Toaster } from "./ui/toaster";
+
 
 export const Root = () => {
   const [addEvent, setAddEvent] = useState(false);
@@ -20,6 +22,7 @@ export const Root = () => {
         cancel={() => setAddEvent(false)}
         finish={() => setAddEvent(false)}
       />
+      <Toaster />
     </Box>
   );
 };

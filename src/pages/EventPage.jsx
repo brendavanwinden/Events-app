@@ -22,8 +22,8 @@ export const EventPage = () => {
       {event ? (
         <>
           <Flex justifyContent="space-between" alignItems="center">
-            <Heading>{event.title}</Heading>
-            <Flex gap={2}>
+            <Heading >{event.title}</Heading>
+            <Flex>
               <Button
                 onClick={() => setEditEvent(true)}
                 mt="10px"
@@ -40,7 +40,7 @@ export const EventPage = () => {
                 finish={() => setEditEvent(false)}
               />
             </Flex>
-            <Flex gap={2}>
+            <Flex>
               <Button
                 onClick={() => setDeleteEvent(true)}
                 mt="10px"

@@ -9,6 +9,7 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { toaster } from "./ui/toaster";
 
 export default function AddEventForm({ event, categories, cancel, finish }) {
   const {
@@ -18,20 +19,42 @@ export default function AddEventForm({ event, categories, cancel, finish }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await fetch("http://localhost:3000/events", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: data.title,
-        description: data.description,
-        image: data.image,
-        categoryIds: data.categoryIds.map((id) => Number(id)),
-        location: data.location,
-        startTime: data.startTime,
-        endTime: data.endTime,
-      }),
-    });
-    finish();
+    try {
+      const response = await fetch("http://localhost:3000/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: data.title,
+          description: data.description,
+          image: data.image,
+          categoryIds: data.categoryIds.map((id) => Number(id)),
+          location: data.location,
+          startTime: data.startTime,
+          endTime: data.endTime,
+        }),
+      });
+      if (!response.ok) {
+        toaster.create({
+          title: "Error",
+          description: "Event is not created",
+          type: "error",
+        });
+        return;
+      }
+      toaster.create({
+        title: "Successfull!",
+        description: "Event was successfully created",
+        type: "success",
+      });
+
+      finish();
+    } catch {
+      toaster.create({
+        title: "Error",
+        description: "An error has occurred",
+        type: "error",
+      });
+    }
   };
   return (
     <Dialog.Root open={event} onOpenChange={cancel}>
@@ -106,7 +129,11 @@ export default function AddEventForm({ event, categories, cancel, finish }) {
                 <Fieldset.Legend>Category</Fieldset.Legend>
                 {categories.map((category) => (
                   <Checkbox.Root key={category.id} value={category.id}>
-                    <Checkbox.HiddenInput {...register("categoryIds")} />
+                    <Checkbox.HiddenInput
+                      {...register("categoryIds", {
+                        required: "Categories are required",
+                      })}
+                    />
                     <Checkbox.Control>
                       <Checkbox.Indicator />
                     </Checkbox.Control>

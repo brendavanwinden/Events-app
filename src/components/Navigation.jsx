@@ -1,10 +1,12 @@
-import { Flex, Link, Button } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export const Navigation = ({ openAddEvent }) => {
   return (
     <nav>
       <Flex gap={2}>
-        <Link href="/">Events</Link>
+        <Link to="/">Events</Link>
+        <Link to="/about">About</Link>
         <Button
           onClick={openAddEvent}
           justifyContent={"space-between"}

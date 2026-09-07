@@ -6,6 +6,7 @@ import { Provider } from './components/ui/provider';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Root } from './components/Root';
 import { EventProvider } from './context/EventsContext';
+import { AboutPage } from './pages/About';
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,12 @@ const router = createBrowserRouter([
             {
                 path: '/event/:eventId',
                 element: <EventPage />,
+                // loader: postLoader,
+                // action: addComment,
+            },
+            {
+                path: '/about',
+                element: <AboutPage />,
                 // loader: postLoader,
                 // action: addComment,
             },
