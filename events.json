@@ -20,15 +20,13 @@
     {
       "id": 1,
       "createdBy": 1,
-      "title": "Trampoline party",
-      "description": "Bounce around with your friends",
+      "title": "Trampo party",
+      "description": "Bounce around with your buddies",
       "image": "https://i.pinimg.com/736x/3d/2f/af/3d2faf4e3188d34a9fcdc00df59e77b0.jpg",
-      "categoryIds": [
-        2
-      ],
+      "categoryIds": [],
       "location": "My back yard",
-      "startTime": "2023-03-10T18:00:00.000Z",
-      "endTime": "2023-03-10T19:00:00.000Z"
+      "startTime": "2026-09-14T12:00",
+      "endTime": "2026-09-14T14:00"
     },
     {
       "id": 2,

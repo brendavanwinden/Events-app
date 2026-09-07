@@ -1,25 +1,14 @@
-import {
-  Heading,
-  Image,
-  Input,
-  Text,
-  Box,
-  Checkbox,
-  Flex,
-} from "@chakra-ui/react";
+import { Heading, Image, Text, Box, Checkbox, Flex } from "@chakra-ui/react";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { EventContext } from "../context/EventsContext";
+import { SearchBar } from "../components/Search";
 
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
-  const { categories } = useContext(EventContext);
   const [searchInput, setSearchInput] = useState("");
+  const { categories } = useContext(EventContext);
   const [selectedCategories, setSelectedCategories] = useState([]);
-
-  const handleChange = (e) => {
-    setSearchInput(e.target.value);
-  };
 
   const navigate = useNavigate();
 
@@ -44,11 +33,13 @@ export const EventsPage = () => {
     return category?.name;
   }
 
+  const normalizedSearch = searchInput.toLowerCase().replace(/[-\s]/g, "");
+
   const filteredEvents = events.filter((event) => {
     const matchesSearch = event.title
       .toLowerCase()
       .replace(/[-\s]/g, "")
-      .includes(searchInput.toLowerCase().replace(/[-\s]/g, ""));
+      .includes(normalizedSearch);
 
     const matchesCategory =
       selectedCategories.length === 0 ||
@@ -59,11 +50,11 @@ export const EventsPage = () => {
 
   const handleCategoryToggle = (categoryId) => {
     if (selectedCategories.includes(categoryId)) {
-      setSelectedCategories(
-        selectedCategories.filter((id) => id !== categoryId),
+      setSelectedCategories((current) =>
+        current.filter((id) => id !== categoryId),
       );
     } else {
-      setSelectedCategories([...selectedCategories, categoryId]);
+      setSelectedCategories((current) => [...current, categoryId]);
     }
   };
 
@@ -81,23 +72,7 @@ export const EventsPage = () => {
           List of events
         </Heading>
 
-        <Input
-          type="search"
-          value={searchInput}
-          onChange={handleChange}
-          placeholder="Search for your Event"
-          _placeholder={{ textAlign: "center" }}
-          fontSize={{ base: "12px", md: "14px", lg: "16px" }}
-          border="1px solid white"
-          borderRadius="4px"
-          padding="8px"
-          width="40vw"
-          marginBottom="40px"
-          textAlign="center"
-          fontWeight={500}
-          mt={{ base: "70px", md: "90px" }}
-          mb="50px"
-        />
+        <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
 
         <Box marginBottom="20px">
           {categories.map((category) => (
@@ -113,7 +88,6 @@ export const EventsPage = () => {
               <Checkbox.Label>{category.name}</Checkbox.Label>
             </Checkbox.Root>
           ))}
-          ;
         </Box>
 
         {filteredEvents.length === 0 ? (
