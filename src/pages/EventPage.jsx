@@ -1,4 +1,14 @@
-import { Heading, Box, Image, Text, Button, Flex } from "@chakra-ui/react";
+import {
+  Heading,
+  Box,
+  Image,
+  Text,
+  Button,
+  Flex,
+  Stack,
+  HStack,
+  Tag,
+} from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { EventContext } from "../context/EventsContext";
@@ -21,73 +31,114 @@ export const EventPage = () => {
     <>
       {event ? (
         <>
-          <Flex justifyContent="space-between" alignItems="center">
-            <Heading >{event.title}</Heading>
-            <Flex>
-              <Button
-                onClick={() => setEditEvent(true)}
-                mt="10px"
-                mr="10px"
-                mb="10px"
-              >
-                Edit event
-              </Button>
-              <EditEventForm
-                isOpen={editEvent}
-                eventData={event}
-                categories={categories}
-                cancel={() => setEditEvent(false)}
-                finish={() => setEditEvent(false)}
-              />
+          <Box
+            key={event.id}
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            p={4}
+            mx="auto"
+            maxW="80vw"
+            bg="gray.800"
+            borderColor="gray.600"
+            display={"grid"}
+            columnCount={"1"}
+            justifyContent={"center"}
+            textAlign={"center"}
+            boxShadow="0 4px 20px rgba(255, 255, 255, 0.08)"
+          >
+            <Heading mb="20px">{event.title}</Heading>
+            <Box>
+              <div>
+                <Text mb="20px">{event.description}</Text>
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  borderRadius="md"
+                  mb={3}
+                  objectFit="cover"
+                />
+                <Stack minH="120px" spacing={1}>
+                  <Text fontSize="sm" color="gray.400">
+                    {event.location}
+                  </Text>
+                  <Text
+                    fontSize="sm"
+                    color="gray.400"
+                    textAlign={"center"}
+                    display={"grid"}
+                    columnCount={"1"}
+                  >
+                    {new Date(event.startTime).toLocaleString("nl-NL", {
+                      day: "numeric",
+                      month: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                    {" – "}
+                    {new Date(event.endTime).toLocaleString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </Text>
+                  <HStack
+                    spacing={2}
+                    wrap="wrap"
+                    justifyContent="center"
+                    width="100%"
+                  >
+                    <Tag.Root
+                      key={name}
+                      colorScheme="grey"
+                      border="1px solid grey"
+                    >
+                      <Tag.Label fontSize="sm">
+                        {event.categoryIds
+                          .map((id) => getCategoryName(id))
+                          .filter(Boolean)
+                          .join(", ")}
+                      </Tag.Label>
+                    </Tag.Root>
+                  </HStack>
+                </Stack>
+              </div>
+            </Box>{" "}
+            <Flex justifyContent="flex-end" alignItems="center">
+              <Flex>
+                <Button
+                  onClick={() => setEditEvent(true)}
+                  mt="10px"
+                  mr="10px"
+                  mb="10px"
+                >
+                  Edit event
+                </Button>
+                <EditEventForm
+                  isOpen={editEvent}
+                  eventData={event}
+                  categories={categories}
+                  cancel={() => setEditEvent(false)}
+                  finish={() => setEditEvent(false)}
+                />
+              </Flex>
+              <Flex>
+                <Button
+                  onClick={() => setDeleteEvent(true)}
+                  mt="10px"
+                  mr="10px"
+                  mb="10px"
+                >
+                  Delete event
+                </Button>
+                <DeleteEvent
+                  isOpen={deleteEvent}
+                  event={event}
+                  cancel={() => setDeleteEvent(false)}
+                  finish={() => setDeleteEvent(false)}
+                />
+              </Flex>
             </Flex>
-            <Flex>
-              <Button
-                onClick={() => setDeleteEvent(true)}
-                mt="10px"
-                mr="10px"
-                mb="10px"
-              >
-                Delete event
-              </Button>
-              <DeleteEvent
-                isOpen={deleteEvent}
-                event={event}
-                cancel={() => setDeleteEvent(false)}
-                finish={() => setDeleteEvent(false)}
-              />
-            </Flex>
-          </Flex>
-          <Box>
-            <div>
-              <p>{event.description}</p>
-              <Image src={event.image} alt={event.title} />
-              <p>{event.location}</p>
-              <p>
-                {new Date(event.startTime).toLocaleString([], {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </p>
-              <p>
-                {new Date(event.endTime).toLocaleString([], {
-                  year: "numeric",
-                  month: "numeric",
-                  day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </p>
-              <p>
-                {event.categoryIds
-                  .map((id) => getCategoryName(id))
-                  .filter(Boolean)
-                  .join(", ")}
-              </p>
-            </div>
-          </Box>{" "}
+          </Box>
         </>
       ) : (
         <Text fontSize="18px" color="white" marginTop="20px">

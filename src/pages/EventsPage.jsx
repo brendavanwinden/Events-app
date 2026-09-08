@@ -68,7 +68,7 @@ export const EventsPage = () => {
 
         <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
 
-        <Box marginBottom="20px">
+        <HStack gap={4} marginBottom="20px">
           {categories.map((category) => (
             <Checkbox.Root
               key={category.id}
@@ -82,7 +82,7 @@ export const EventsPage = () => {
               <Checkbox.Label>{category.name}</Checkbox.Label>
             </Checkbox.Root>
           ))}
-        </Box>
+        </HStack>
 
         {filteredEvents.length === 0 ? (
           <Text fontSize="18px" color="white" marginTop="20px">
