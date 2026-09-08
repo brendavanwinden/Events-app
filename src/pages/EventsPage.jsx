@@ -14,11 +14,13 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { EventContext } from "../context/EventsContext";
 import { SearchBar } from "../components/Search";
+import EventSkeleton from "../components/EventSkeleton";
 
 export const EventsPage = () => {
   const [searchInput, setSearchInput] = useState("");
-  const { events, categories } = useContext(EventContext);
+  const { events, categories, loading } = useContext(EventContext);
   const [selectedCategories, setSelectedCategories] = useState([]);
+
 
   const navigate = useNavigate();
 
@@ -84,7 +86,13 @@ export const EventsPage = () => {
           ))}
         </HStack>
 
-        {filteredEvents.length === 0 ? (
+        {loading ? (
+          <SimpleGrid columns={[1, 2, 3]} gap={6} mb="60px">
+            {Array.from({ length: 12 }).map((_, index) => (
+              <EventSkeleton key={index} />
+            ))}
+          </SimpleGrid>
+        ) : filteredEvents.length === 0 ? (
           <Text fontSize="18px" color="white" marginTop="20px">
             No events found. Try a different search.
           </Text>

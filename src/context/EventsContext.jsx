@@ -1,27 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 
-
 export const EventContext = createContext();
 
 export function EventProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [events, setEvents] = useState([]);
-
-   async function getCategories() {
-    const response = await fetch("http://localhost:3000/categories", {
-      method: "GET",
-    });
-    return response.json();
-  }
-
-   useEffect(() => {
-    async function fetchCategories() {
-      const result = await getCategories();
-      setCategories(result);
-    }
-
-    fetchCategories();
-  }, []);
+  const [loading, setLoading] = useState(true);
 
   async function getEvents() {
     const response = await fetch("http://localhost:3000/events", {
@@ -30,19 +14,33 @@ export function EventProvider({ children }) {
     return response.json();
   }
 
-  useEffect(() => {
-    async function fetchEvents() {
-      const result = await getEvents();
-      setEvents(result);
-    }
+  async function getCategories() {
+    const response = await fetch("http://localhost:3000/categories", {
+      method: "GET",
+    });
+    return response.json();
+  }
 
-    fetchEvents();
+  async function fetchData() {
+    setLoading(true);
+    const [eventsResult, categoriesResult] = await Promise.all([
+      getEvents(),
+      getCategories(),
+    ]);
+    setEvents(eventsResult);
+    setCategories(categoriesResult);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  return (
-        <EventContext.Provider value={{ categories, events }}>
-            {children}
-        </EventContext.Provider>
-    );
+
  
-};
+  return (
+    <EventContext.Provider value={{ categories, events, loading }}>
+      {children}
+    </EventContext.Provider>
+  );
+}
