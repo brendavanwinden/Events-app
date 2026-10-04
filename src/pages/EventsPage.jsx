@@ -9,6 +9,7 @@ import {
   SimpleGrid,
   HStack,
   Tag,
+  Button,
 } from "@chakra-ui/react";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
@@ -20,7 +21,6 @@ export const EventsPage = () => {
   const [searchInput, setSearchInput] = useState("");
   const { events, categories, loading } = useContext(EventContext);
   const [selectedCategories, setSelectedCategories] = useState([]);
-
 
   const navigate = useNavigate();
 
@@ -70,7 +70,14 @@ export const EventsPage = () => {
 
         <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
 
-        <HStack gap={4} marginBottom="20px">
+        <Stack
+          gap={4}
+          marginBottom="20px"
+          flexWrap={"wrap"}
+          padding={"16px"}
+          direction={"row"}
+          justifyContent="center"
+        >
           {categories.map((category) => (
             <Checkbox.Root
               key={category.id}
@@ -84,10 +91,15 @@ export const EventsPage = () => {
               <Checkbox.Label>{category.name}</Checkbox.Label>
             </Checkbox.Root>
           ))}
-        </HStack>
+        </Stack>
 
         {loading ? (
-          <SimpleGrid columns={[1, 2, 3]} gap={6} mb="60px">
+          <SimpleGrid
+            columns={[1, 2, 3, 4]}
+            gap={6}
+            mb="60px"
+            padding={{ base: "16px", md: "10px", lg: "8px" }}
+          >
             {Array.from({ length: 12 }).map((_, index) => (
               <EventSkeleton key={index} />
             ))}
@@ -97,7 +109,12 @@ export const EventsPage = () => {
             No events found. Try a different search.
           </Text>
         ) : (
-          <SimpleGrid columns={[1, 2, 3]} gap={6} mb="60px">
+          <SimpleGrid
+            columns={[1, 2, 3, 4]}
+            gap={6}
+            mb="60px"
+            padding={{ base: "16px", md: "10px", lg: "8px" }}
+          >
             {filteredEvents.map((event) => {
               const categoryNames = event.categoryIds
                 .map((id) => getCategoryName(id))
@@ -111,14 +128,23 @@ export const EventsPage = () => {
                   overflow="hidden"
                   p={4}
                   mx="auto"
-                  maxW="250px"
-                  bg="gray.800"
+                  maxW="300px"
+                  w="100%"
+                  bg="brand.card"
                   borderColor="gray.600"
-                  minW="250px"
+                  display="flex"
+                  flexDirection="column"
+                  cursor="pointer"
+                  transition="all 0.2s ease-in-out"
+                  _hover={{
+                    borderColor: "#bc8a5f",
+                    boxShadow: "0 4px 20px #bc8a5f",
+                    fontWeight: "bolder",
+                  }}
                   boxShadow="0 4px 20px rgba(255, 255, 255, 0.08)"
                   onClick={() => navigate(`/event/${event.id}`)}
                 >
-                  <Stack>
+                  <Stack flex="1">
                     <Text fontSize="lg" fontWeight="bold">
                       {event.title}
                     </Text>
@@ -133,10 +159,10 @@ export const EventsPage = () => {
                       width="100%"
                     />
                     <Stack minH="120px" spacing={1}>
-                      <Text fontSize="sm" color="gray.400">
+                      <Text fontSize="sm" color="brand.text">
                         {event.location}
                       </Text>
-                      <Text fontSize="sm" color="gray.400">
+                      <Text fontSize="sm" color="brand.text">
                         {new Date(event.startTime).toLocaleString("nl-NL", {
                           day: "numeric",
                           month: "numeric",
@@ -149,18 +175,35 @@ export const EventsPage = () => {
                           minute: "2-digit",
                         })}
                       </Text>
-                      <HStack spacing={2} wrap="wrap">
+                      <HStack spacing={2} flexWrap={"wrap"}>
                         {categoryNames.map((name) => (
                           <Tag.Root
                             key={name}
-                            colorScheme="grey"
-                            border="1px solid grey"
+                            background={"brand.bg"}
+                            border=" 1px solid"
+                            borderColor={"brand.accent"}
+                            boxShadow="none"
                           >
-                            <Tag.Label fontSize="sm">{name}</Tag.Label>
+                            <Tag.Label fontSize="sm" color="brand.text">
+                              {name}
+                            </Tag.Label>
                           </Tag.Root>
                         ))}
                       </HStack>
                     </Stack>
+
+                    <HStack justifyContent={"center"} mt="auto">
+                      <Button
+                        size="xs"
+                        bg="brand.bg"
+                        border=" 1px solid"
+                        borderColor={"brand.accent"}
+                        color="brand.text"
+                        onClick={() => navigate(`/event/${event.id}`)}
+                      >
+                        View details
+                      </Button>
+                    </HStack>
                   </Stack>
                 </Box>
               );

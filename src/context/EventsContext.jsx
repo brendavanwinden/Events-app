@@ -22,7 +22,6 @@ export function EventProvider({ children }) {
   }
 
   async function fetchData() {
-    setLoading(true);
     const [eventsResult, categoriesResult] = await Promise.all([
       getEvents(),
       getCategories(),
@@ -36,10 +35,8 @@ export function EventProvider({ children }) {
     fetchData();
   }, []);
 
-
- 
   return (
-    <EventContext.Provider value={{ categories, events, loading }}>
+    <EventContext.Provider value={{ categories, events, loading, fetchData }}>
       {children}
     </EventContext.Provider>
   );

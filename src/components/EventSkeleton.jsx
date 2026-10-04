@@ -7,11 +7,11 @@ export default function EventSkeleton() {
       borderRadius="lg"
       overflow="hidden"
       p={4}
-      mx="auto"
-      maxW="250px"
       bg="gray.800"
       borderColor="gray.600"
-      minW="250px"
+      w="100%"
+      maxW="300px"
+      mx="auto"
       boxShadow="0 4px 20px rgba(255, 255, 255, 0.08)"
     >
       <Stack>

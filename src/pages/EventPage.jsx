@@ -15,6 +15,7 @@ import { EventContext } from "../context/EventsContext";
 import EditEventForm from "../components/EditEventForm";
 import DeleteEvent from "../components/DeleteEvent";
 import { EventDetailSkeleton } from "../components/EventSkeleton";
+import { useNavigate } from "react-router-dom";
 
 export const EventPage = () => {
   const { eventId } = useParams();
@@ -22,6 +23,7 @@ export const EventPage = () => {
   const event = events.find((e) => e.id === Number(eventId));
   const [editEvent, setEditEvent] = useState(false);
   const [deleteEvent, setDeleteEvent] = useState(false);
+  let navigate = useNavigate();
 
   function getCategoryName(categoryId) {
     const category = categories.find((cat) => cat.id === categoryId);
@@ -41,8 +43,8 @@ export const EventPage = () => {
           p={4}
           mx="auto"
           maxW="80vw"
-          bg="gray.800"
-          borderColor="gray.600"
+          bg="brand.card"
+          borderColor="brand.accent"
           display={"grid"}
           columnCount={"1"}
           justifyContent={"center"}
@@ -59,16 +61,18 @@ export const EventPage = () => {
                 src={event.image}
                 alt={event.title}
                 borderRadius="md"
+                border="1px solid"
+                borderColor={"brand.accent"}
                 mb={3}
                 objectFit="cover"
               />
               <Stack minH="120px" spacing={1}>
-                <Text fontSize="sm" color="gray.400">
+                <Text fontSize="sm" color="brand.text">
                   {event.location}
                 </Text>
                 <Text
                   fontSize="sm"
-                  color="gray.400"
+                  color="brand.text"
                   textAlign={"center"}
                   display={"grid"}
                   columnCount={"1"}
@@ -97,23 +101,50 @@ export const EventPage = () => {
                     .map((name) => (
                       <Tag.Root
                         key={name}
-                        colorScheme="grey"
-                        border="1px solid grey"
+                        background={"brand.accent"}
+                        border=" 1px solid"
+                        borderColor={"brand.accent"}
+                        boxShadow="none"
                       >
-                        <Tag.Label fontSize="sm">{name}</Tag.Label>
+                        <Tag.Label fontSize="sm" color="brand.text">
+                          {name}
+                        </Tag.Label>
                       </Tag.Root>
                     ))}
                 </HStack>
               </Stack>
             </div>
           </Box>{" "}
-          <Flex justifyContent="flex-end" alignItems="center">
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            <Flex>
+              <Button
+                onClick={() => navigate("/")}
+                variant="outline"
+                mt="10px"
+                mr="10px"
+                mb="10px"
+                background={"brand.accent"}
+                border=" 1px solid"
+                borderColor={"brand.accent"}
+                color="brand.text"
+              >
+                Go back
+              </Button>
+            </Flex>
             <Flex>
               <Button
                 onClick={() => setEditEvent(true)}
                 mt="10px"
                 mr="10px"
                 mb="10px"
+                background={"brand.accent"}
+                border=" 1px solid"
+                borderColor={"brand.accent"}
+                color="brand.text"
               >
                 Edit event
               </Button>
@@ -131,6 +162,10 @@ export const EventPage = () => {
                 mt="10px"
                 mr="10px"
                 mb="10px"
+                background={"brand.accent"}
+                border=" 1px solid"
+                borderColor={"brand.accent"}
+                color="brand.text"
               >
                 Delete event
               </Button>

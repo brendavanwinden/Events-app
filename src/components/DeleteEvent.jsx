@@ -45,21 +45,31 @@ export default function DeleteEvent({ isOpen, event, cancel, finish }) {
     <Dialog.Root open={isOpen} onOpenChange={cancel}>
       <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content>
-          <Dialog.Header justifyContent={"center"}>
+        <Dialog.Content bg="brand.bg">
+          <Dialog.Header justifyContent={"center"} color="brand.text">
             Are you sure you would like to delete this event?
           </Dialog.Header>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Dialog.Footer>
               <HStack justifyContent={"center"} width={"full"}>
-                <Button onClick={cancel} variant="outline">
+                <Button
+                  onClick={cancel}
+                  variant="outline"
+                  bg={"brand.accent"}
+                  border="1px solid"
+                  borderColor={"brand.accent"}
+                  color="brand.text"
+                >
                   No
                 </Button>
 
                 <Button
                   type="submit"
-                  colorScheme="blue"
-                  isLoading={isSubmitting}
+                  loading={isSubmitting}
+                  bg={"brand.accent"}
+                  border="1px solid"
+                  borderColor={"brand.accent"}
+                  color="brand.text"
                 >
                   Yes
                 </Button>

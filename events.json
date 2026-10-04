@@ -132,6 +132,55 @@
       "location": "Downtown Bowling Alley",
       "startTime": "2023-03-19T18:00:00.000Z",
       "endTime": "2023-03-19T21:00:00.000Z"
+    },
+    {
+      "title": "Cars kidsplay",
+      "description": "Play all day with the Cars family",
+      "image": "https://m.media-amazon.com/images/M/MV5BMTg5NzY0MzA2MV5BMl5BanBnXkFtZTYwNDc3NTc2._V1_FMjpg_UX1000_.jpg",
+      "categoryIds": [
+        2,
+        3
+      ],
+      "location": "Home",
+      "startTime": "2026-10-07T12:34",
+      "endTime": "2026-10-17T12:34",
+      "id": 10
+    },
+    {
+      "title": "Princesses of Disney",
+      "description": "Be a princes today!",
+      "image": "https://static.wikia.nocookie.net/disneyprincess/images/3/30/The_Live_Action_Princesses.jpeg/revision/latest/scale-to-width-down/286?cb=20260714001859",
+      "categoryIds": [
+        3
+      ],
+      "location": "Home",
+      "startTime": "2026-10-07T12:43",
+      "endTime": "2026-10-08T12:44",
+      "id": 11
+    },
+    {
+      "title": "Jungle theme",
+      "description": "Let's play in the jungle today!",
+      "image": "https://lumiere-a.akamaihd.net/v1/images/p_thejunglebook1967_19869_f10b5016.jpeg?region=0%2C0%2C540%2C810",
+      "categoryIds": [
+        1
+      ],
+      "location": "Jungle",
+      "startTime": "2026-10-08T12:45",
+      "endTime": "2026-10-08T15:45",
+      "id": 12
+    },
+    {
+      "title": "Pool party",
+      "description": "Let's go swim!!!",
+      "image": "https://m.media-amazon.com/images/I/81KX8Ahtt+L.jpg\n",
+      "categoryIds": [
+        1
+      ],
+      "location": "Swimming pool at my house",
+      "startTime": "2026-10-13T13:00",
+      "endTime": "2026-10-14T13:00",
+      "id": 13
     }
   ],
   "categories": [
