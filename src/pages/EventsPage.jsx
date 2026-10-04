@@ -99,13 +99,14 @@ export const EventsPage = () => {
             gap={6}
             mb="60px"
             padding={{ base: "16px", md: "10px", lg: "8px" }}
+            w="100%"
           >
             {Array.from({ length: 12 }).map((_, index) => (
               <EventSkeleton key={index} />
             ))}
           </SimpleGrid>
         ) : filteredEvents.length === 0 ? (
-          <Text fontSize="18px" color="white" marginTop="20px">
+          <Text fontSize="18px" color="brand.text" marginTop="20px">
             No events found. Try a different search.
           </Text>
         ) : (

@@ -7,15 +7,21 @@ export default function EventSkeleton() {
       borderRadius="lg"
       overflow="hidden"
       p={4}
-      bg="gray.800"
-      borderColor="gray.600"
+      bg="brand.card"
+      borderColor="brand.accent"
       w="100%"
       maxW="300px"
       mx="auto"
       boxShadow="0 4px 20px rgba(255, 255, 255, 0.08)"
     >
       <Stack>
-        <Stack minH="180px">
+        <Stack
+          minH="60px"
+          css={{
+            "--start-color": "brand.text",
+            "--end-color": "brand.accent",
+          }}
+        >
           <SkeletonText noOfLines={2} />
         </Stack>
 
@@ -42,24 +48,26 @@ export function EventDetailSkeleton() {
       borderRadius="lg"
       overflow="hidden"
       p={4}
+      w="100%"
+      maxW="300px"
       mx="auto"
-      maxW="80vw"
-      bg="gray.800"
-      borderColor="gray.600"
-      display={"grid"}
-      columnCount={"1"}
-      justifyContent={"center"}
-      textAlign={"center"}
+      bg="brand.card"
+      borderColor="brand.accent"
       boxShadow="0 4px 20px rgba(255, 255, 255, 0.08)"
-      mt={"30px"}
-      mb={"30px"}
+      mt="75px"
     >
       <Stack>
-        <Stack minH="180px">
+        <Stack minH="60px">
           <SkeletonText noOfLines={2} />
         </Stack>
 
-        <Skeleton borderRadius="md" mb={3} objectFit="cover" />
+        <Skeleton
+          borderRadius="md"
+          mb={3}
+          objectFit="cover"
+          height="150px"
+          width="100%"
+        />
 
         <VStack>
           <SkeletonText noOfLines={3} />

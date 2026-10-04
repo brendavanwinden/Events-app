@@ -8,6 +8,7 @@ import {
   Stack,
   HStack,
   Tag,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useContext, useState } from "react";
@@ -33,7 +34,7 @@ export const EventPage = () => {
   return (
     <>
       {loading ? (
-        <EventDetailSkeleton />
+        <EventDetailSkeleton/>
       ) : (
         <Box
           key={event.id}
