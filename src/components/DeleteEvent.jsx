@@ -2,8 +2,11 @@ import { Button, HStack, Dialog } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toaster } from "./ui/toaster";
+import { EventContext } from "../context/EventsContext";
+import { useContext } from "react";
 
 export default function DeleteEvent({ isOpen, event, cancel, finish }) {
+  const { fetchData } = useContext(EventContext);
   const {
     handleSubmit,
     formState: { isSubmitting },
@@ -32,6 +35,7 @@ export default function DeleteEvent({ isOpen, event, cancel, finish }) {
       });
       navigate("/");
       finish();
+      fetchData();
     } catch {
       toaster.create({
         title: "Error",

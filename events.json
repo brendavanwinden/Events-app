@@ -95,19 +95,6 @@
       "endTime": "2023-03-13T21:00:00.000Z"
     },
     {
-      "id": 7,
-      "createdBy": 2,
-      "title": "Tea tasting",
-      "description": "Savor the soothing flavors of herbal teas.",
-      "image": "https://wincacademy.github.io/webpages/media/pexels-viktoria-alipatova-1083711-2130137.jpg",
-      "categoryIds": [
-        3
-      ],
-      "location": "Cozy Tea House",
-      "startTime": "2023-03-17T15:00:00.000Z",
-      "endTime": "2023-03-17T17:00:00.000Z"
-    },
-    {
       "id": 8,
       "createdBy": 6,
       "title": "Nature walk",
