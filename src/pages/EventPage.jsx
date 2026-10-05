@@ -8,7 +8,6 @@ import {
   Stack,
   HStack,
   Tag,
-  SimpleGrid,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useContext, useState } from "react";
